@@ -34,14 +34,14 @@ const ReusableDragAndDrop = ({ onFilesAdded }) => {
       <label htmlFor="file-input" style={{ cursor: "pointer" }}>
         Перетащите файлы сюда или нажмите для выбора
       </label>
-      
-      {files.length > 0 && (
+      <p>Загружено: {files.length} файлов</p>
+      {/* {files.length > 0 && (
         <ul>
           {files.map((file, index) => (
             <li key={index}>{file.name}</li>
           ))}
         </ul>
-      )}
+      )} */}
     </div>
   );
 };

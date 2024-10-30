@@ -18,7 +18,8 @@
     "react-drag-drop-files": "^2.4.0",
     "react-filerobot-image-editor": "^4.9.0",
     "react-photo-editor": "^2.1.4",
-    "sass": "^1.80.4"
+    "sass": "^1.80.4",
+    "swiper": "^11.1.14"
   },
   "devDependencies": {
     "@eslint/js": "^9.13.0",
