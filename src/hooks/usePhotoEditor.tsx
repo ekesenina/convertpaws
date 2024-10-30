@@ -201,7 +201,7 @@ export const usePhotoEditor = ({
         } else {
           resolve(null);
         }
-      }, "image/webp", 0.1);
+      }, "image/webp", 0.9);
     });
   };
 
@@ -211,7 +211,7 @@ export const usePhotoEditor = ({
       const link = document.createElement('a');
       const newName = file.name.split('.')[0]
       link.download = newName+".webp"
-      link.href = canvas.toDataURL("image/webp", 0.1);
+      link.href = canvas.toDataURL("image/webp", 0.9);
       link.click();
     }
   };

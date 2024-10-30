@@ -12,12 +12,124 @@
   margin: 0
   padding: 0
   scroll-behavior: smooth
-  // background-color: var(--background-color)
+  &::selection
+    color: var(--text-color)
+    background-color: var(--accent-color)
 
 .App
+  width: 100vw
+  max-width: calc( 100vw - 10px )
+  overflow: hidden
   min-height: 100vh
   background-color: var(--background-color)
 
-.canvas-container
-  canvas
-    max-width: 20vw
+// input[type=range]
+//   -webkit-appearance: none
+//   appearance: none
+//   width: 100%
+//   height: 20px
+
+// input[type=range]::-webkit-slider-runnable-track
+//   width: 100%
+//   height: 20px
+//   border-radius: 10px
+//   background-color: #ff7575
+//   border: 2px solid #960000
+
+// input[type=range]::-webkit-slider-thumb
+//   -webkit-appearance: none
+//   appearance: none
+//   width: 40px
+//   height: 40px
+//   border-radius: 50%
+//   background-color: #68ff5b
+//   border: 2px solid #0c8d00
+//   box-shadow: 0 0 5px rgba(0,0,0,.25)
+//   cursor: pointer
+//   margin-top: -10px
+
+// input[type=range]::-moz-range-track
+//   width: 100%
+//   height: 20px
+//   border-radius: 10px
+//   background-color: #ff7575
+//   border: 2px solid #960000
+
+// input[type=range]::-moz-range-thumb
+//   width: 40px
+//   height: 40px
+//   border-radius: 50%
+//   background-color: #68ff5b
+//   border: 2px solid #0c8d00
+//   box-shadow: 0 0 5px rgba(0,0,0,.25)
+//   cursor: pointer
+
+// input[type=range]::-moz-range-progress
+//   height: 20px
+//   border-radius: 10px 0 0 10px
+//   background-color: #bf63e9
+//   border: 2px solid #460066
+
+// input[type=range]::-ms-track
+//   width: 100%
+//   height: 20px
+//   border-radius: 10px
+//   background-color: #ff7575
+//   border: 2px solid #960000
+//   color: transparent
+
+// input[type=range]::-ms-fill-lower
+//   height: 20px
+//   border-radius: 10px 0 0 10px
+//   background-color: #bf63e9
+//   border: 2px solid #460066
+
+// input[type=range]::-ms-fill-upper
+//   background-color: #ff7575
+//   border: 2px solid #960000
+
+// input[type=range]::-ms-thumb
+//   width: 40px
+//   height: 40px
+//   border-radius: 50%
+//   background-color: #68ff5b
+//   border: 2px solid #0c8d00
+//   box-shadow: 0 0 5px rgba(0,0,0,.25)
+//   cursor: pointer
+
+input[type=range]
+  -webkit-appearance: none
+  appearance: none
+  width: 100%
+  height: 10px
+  background-color: transparent
+
+  // Track
+  &::-webkit-slider-runnable-track
+    width: 100%
+    height: 10px
+    border-radius: 10px
+    background: linear-gradient(to right, #23003a 0%, #8501dd calc(var(--value, 0) * 1%), #ff7575 calc(var(--value, 0) * 1%), #ff7575 100%)
+    border: 2px solid var(--background-color)
+
+  // Thumb
+  &::-webkit-slider-thumb
+    -webkit-appearance: none
+    appearance: none
+    width: 15px
+    height: 15px
+    border-radius: 50%
+    background-color: #68ff5b
+    border: 2px solid #0c8d00
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.25)
+    cursor: pointer
+    margin-top: -5px // Смещение для выравнивания по центру трека
+
+  // For Firefox and other browsers
+  &::-moz-range-track,
+  &::-ms-track
+    background: #3f3f3f
+    height: 10px
+    border-radius: 10px
+    border: 2px solid #960000
+

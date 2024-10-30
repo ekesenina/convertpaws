@@ -1,21 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect  } from 'react';
 import { usePhotoEditor } from '../hooks/usePhotoEditor';
-import { FileUploader } from "react-drag-drop-files";
-// import ReusableDragAndDrop from './DragNDrop';
+import edit from '../assets/icons/editIcon.svg'
+import save from '../assets/icons/saveIcon.svg'
+import reset from '../assets/icons/resetIcon.svg'
+import brightnessIcon from '../assets/icons/brightnessIcon.svg'
+import contrastIcon from '../assets/icons/contrastIcon.svg'
+import saturateIcon from '../assets/icons/saturateIcon.svg'
+import grayscaleIcon from '../assets/icons/grayscaleIcon.svg'
+import rotateIcon from '../assets/icons/rotateIcon.svg'
+import zoomIcon from '../assets/icons/zoomIcon.svg'
+import flipHorizontalIcon from '../assets/icons/flip-horizontal.svg'
+import flipVerticalIcon from '../assets/icons/flip-vertical.svg'
 
-const fileTypes = ["JPG", "JPEG", "PNG", "GIF"];
+function CustomEditor({ file }) {
+  const rangeRef = useRef(null);
 
-const CustomEditor = () => {
-  const [file, setFile] = useState();
-  const handleChange = (file) => {
-    setFile(file);
-  };
-
-  const setFileData = (e) => {
-    if (e?.target?.files && e.target.files.length > 0) {
-      setFile(e.target.files[0]);
-    }
-  };
+  const [isEditorActive, setIsEditorActive] = useState(false);
+  const [isFlipedHorizontal, setIsFlipedHorizontal] = useState(false);
+  const [isFlipedVertical, setIsFlipedVertical] = useState(false);
 
   const {
     canvasRef,
@@ -44,16 +46,20 @@ const CustomEditor = () => {
     resetFilters,
   } = usePhotoEditor({ file });
 
+  const handleEditorClick = () => {
+    setIsEditorActive(!isEditorActive); // Переключаем состояние
+  };
+
+  const handleFlipHorizontalClick = () => {
+    setIsFlipedHorizontal(!isFlipedHorizontal); // Переключаем состояние
+  };
+  
+  const handleFlipVerticalClick = () => {
+    setIsFlipedVertical(!isFlipedVertical); // Переключаем состояние
+  };
+
   return (
-    <div className="container">
-      {/* <input type="file" onChange={(e) => setFileData(e)} multiple={false} /> */}
-      <FileUploader 
-        handleChange={handleChange} 
-        name="file" 
-        types={fileTypes}  
-        classes='dnd'
-        onChange={(e) => setFileData(e)}
-      />
+    <div className='file'>
       {imageSrc && (
         <div className="canvas-container">
           <canvas
@@ -63,13 +69,38 @@ const CustomEditor = () => {
             onMouseUp={handlePointerUp}
             onWheel={handleWheel}
           />
+          <div className='tools'>
+            <button 
+              className='tools__resetButton'
+              onClick={resetFilters}
+              aria-label="Reset changes"
+            >
+              <img className='tools__resetButton__img' src={reset}/>
+            </button>
+            <button 
+              className='tools__editButton' 
+              onClick={handleEditorClick}
+              aria-label="Edit">
+                <img className='tools__editButton__img' src={edit}/>
+            </button>
+            <button 
+              className='tools__saveButton'
+              onClick={downloadImage}
+            >
+              <img className='tools__saveButton__img' src={save}/>
+            </button>
+          </div>
         </div>
       )}
 
-      <div className="controls">
-        <div>
-          <label>Brightness</label>
+      <div className={`controls ${isEditorActive ? 'activeEditor' : ''}`} >
+        <div className='controls__property'>
+          <label className='controls__property__label'>
+            Brightness
+            <img className='controls__property__label__img' src={brightnessIcon}/>
+          </label>
           <input
+            className='controls__property__input'
             type="range"
             min="0"
             max="200"
@@ -78,9 +109,13 @@ const CustomEditor = () => {
           />
         </div>
 
-        <div>
-          <label>Contrast</label>
+        <div className='controls__property'>
+          <label className='controls__property__label'>
+            Contrast
+            <img className='controls__property__label__img' src={contrastIcon}/>
+          </label>
           <input
+            className='controls__property__input'
             type="range"
             min="0"
             max="200"
@@ -89,9 +124,13 @@ const CustomEditor = () => {
           />
         </div>
 
-        <div>
-          <label>Saturate</label>
+        <div className='controls__property'>
+          <label className='controls__property__label'>
+            Saturate
+            <img className='controls__property__label__img saturate' src={saturateIcon}/>
+          </label>
           <input
+            className='controls__property__input'
             type="range"
             min="0"
             max="200"
@@ -100,9 +139,13 @@ const CustomEditor = () => {
           />
         </div>
 
-        <div>
-          <label>Grayscale</label>
+        <div className='controls__property'>
+          <label className='controls__property__label'>
+            Grayscale
+            <img className='controls__property__label__img' src={grayscaleIcon}/>
+          </label>
           <input
+            className='controls__property__input'
             type="range"
             min="0"
             max="100"
@@ -111,9 +154,13 @@ const CustomEditor = () => {
           />
         </div>
 
-        <div>
-          <label>Rotate</label>
+        <div className='controls__property'>
+          <label className='controls__property__label'>
+            Rotate
+            <img className='controls__property__label__img' src={rotateIcon}/>
+          </label>
           <input
+            className='controls__property__input'
             type="range"
             min="0"
             max="360"
@@ -122,47 +169,60 @@ const CustomEditor = () => {
           />
         </div>
 
-        <div>
-          <label>Zoom</label>
+        <div className='controls__property'>
+          <label className='controls__property__label'>
+            Zoom
+            <img className='controls__property__label__img' src={zoomIcon}/>
+          </label>
           <input
+            className='controls__property__input'
             type="range"
             min="0.1"
-            max="3"
+            max="10"
             step="0.1"
             value={zoom}
             onChange={(e) => setZoom(Number(e.target.value))}
           />
         </div>
 
-        <div>
-          <label>
+        <div className='controls__property'>
+          <label className='controls__property__label'>
             <input
+              className='controls__property__input flipCheckbox'
               type="checkbox"
               checked={flipHorizontal}
+              onClick={handleFlipHorizontalClick}
               onChange={(e) => setFlipHorizontal(e.target.checked)}
+            />
+            <img 
+              className={`controls__property__label__img ${isFlipedHorizontal ? 'flipedHorizontal' : ''}`}
+              // className='controls__property__label__img' 
+              src={flipHorizontalIcon}
             />
             Flip Horizontal
           </label>
         </div>
 
-        <div>
-          <label>
+        <div className='controls__property'>
+          <label className='controls__property__label'>
             <input
+              className='controls__property__input flipCheckbox'
               type="checkbox"
               checked={flipVertical}
+              onClick={handleFlipVerticalClick}
               onChange={(e) => setFlipVertical(e.target.checked)}
+            />
+            <img 
+              className={`controls__property__label__img ${isFlipedVertical ? 'flipedVertical' : ''}`}
+              // className='controls__property__label__img' 
+              src={flipVerticalIcon}
             />
             Flip Vertical
           </label>
         </div>
-
-        <div className="buttons">
-            <button onClick={resetFilters}>Reset</button>
-            <button onClick={downloadImage}>Save</button>
-        </div>
       </div>
     </div>
   );
-};
+}
 
 export default CustomEditor;
