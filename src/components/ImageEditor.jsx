@@ -2,14 +2,13 @@ import React, { useState } from 'react';
 import ReusableDragAndDrop from '../utils/DragNDrop';
 import CustomEditor from '../utils/CustomEditor';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, A11y, Autoplay,  } from 'swiper/modules';
+import { Navigation, Pagination, A11y, Autoplay } from 'swiper/modules';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import 'swiper/css/autoplay';
-import 'swiper/css/effect-cards';
 
 const ImageEditor = () => {
   const [files, setFiles] = useState([]); 
@@ -26,6 +25,8 @@ const ImageEditor = () => {
           className='slider'
           modules={[Navigation, Pagination, A11y, Autoplay]}
           grabCursor={true}
+          zoom={true}
+          allowTouchMove={false}
           slidesPerView={3}
           spaceBetween={0}
           navigation
@@ -38,11 +39,11 @@ const ImageEditor = () => {
                 slidesPerView: 3
             },
             660: {
-                slidesPerView: 2
+                slidesPerView: 2,
             },
             0: {
                 slidesPerView: 1
-                },
+              },
             }}
         >
           {files.map((file, index) => (

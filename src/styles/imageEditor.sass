@@ -10,7 +10,7 @@
     height: fit-content
     margin: 50px 0px
     &__fileContainer
-        padding-top: 30px
+        padding-top: 15px
         display: flex
         gap: 3vw
         width: 90vw
@@ -23,35 +23,52 @@
             max-width: 99vw
             gap: 2vw
         .slider
-            // [id^="swiper-wrapper-"]
-            //     align-items: flex-start !important
+            width: 99vw
+            max-width: 99vw
+            display: flex
+            align-items: center
+            justify-content: center
+            @media ( min-width: 0px ) and ( max-width: 425px )
+                width: 99vw
+            // .swiper-wrapper
+            //     justify-content: center
             .swiper-button-prev
                 content: url(../assets/icons/arrow_left.svg)
-                bottom: 0 !important
+                // bottom: 0 !important
                 display: block !important
-                left: 10% !important
-                top: auto !important
+                left: 40% !important
+                // top: auto !important
                 background-color: transparent
                 padding: 10px
+                top: 30px !important
+                z-index: 20
                 filter: var(--slider-arrows-filter)
             .swiper-button-next
                 content: url(../assets/icons/arrow_right.svg)
-                bottom: 0 !important
+                // bottom: 0 !important
                 display: block !important
-                right: 10% !important
-                top: auto !important
+                right: 40% !important
+                // top: auto !important
                 background-color: transparent
                 padding: 10px
+                top: 30px !important
+                z-index: 20
                 filter: var(--slider-arrows-filter)
             .swiper-pagination
+                top: 30px !important
+                z-index: 19
+                height: fit-content
                 .swiper-pagination-bullet-active
                     background: var(--accent-color)
             &__slide
+                z-index: 21
+                margin-top: 100px
                 margin-bottom: 60px
                 display: flex
                 flex-direction: column
                 justify-content: flex-start
                 align-items: center
+                // width: fit-content !important
                 &__fileName
                     font-family: 'main'
                     color: var(--text-color)
@@ -75,11 +92,16 @@
                 width: fit-content
                 margin: 25px 0px
                 max-height: 400px
-                canvas
+                .canvas
+                    z-index: 1001
                     max-height: 400px
                     border-radius: 15px
-                    max-width: 20vw
-                    min-width: 320px
+                    max-width: 25vw
+                    min-width: 280px
+                    cursor: grab
+                    touch-action: none
+                .dragging
+                    cursor: grabbing
                 .tools
                     display: flex
                     justify-content: center
