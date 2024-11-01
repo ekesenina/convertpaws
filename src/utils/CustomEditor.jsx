@@ -11,6 +11,7 @@ import rotateIcon from '../assets/icons/rotateIcon.svg';
 import zoomIcon from '../assets/icons/zoomIcon.svg';
 import flipHorizontalIcon from '../assets/icons/flip-horizontal.svg';
 import flipVerticalIcon from '../assets/icons/flip-vertical.svg';
+import convertIcon from '../assets/icons/convertIcon.svg';
 
 function CustomEditor({ file }) {
   const rangeRefs = useRef([]);
@@ -29,6 +30,8 @@ function CustomEditor({ file }) {
     setSaturate,
     grayscale,
     setGrayscale,
+    tint,
+    setTint,
     rotate,
     setRotate,
     flipHorizontal,
@@ -42,6 +45,7 @@ function CustomEditor({ file }) {
     handlePointerMove,
     handleWheel,
     downloadImage,
+    convertAndDownloadImage,
     resetFilters,
     isDragging,
   } = usePhotoEditor({ file });
@@ -74,16 +78,6 @@ function CustomEditor({ file }) {
     setIsFlipedVertical(!isFlipedVertical); // Переключаем состояние
   };
 
-  // const handleResetClick = () => {
-  //   resetFilters(() => {
-  //     setIsFlipedHorizontal(false);
-  //     setIsFlipedVertical(false);
-  //     // Обновляем стили инпутов после сброса
-  //     rangeRefs.current.forEach((rangeInput) => {
-  //       if (rangeInput) updateProgress(rangeInput);
-  //     });
-  //   });
-  // };
   const handleResetClick = () => {
     // Первый вызов resetFilters
     resetFilters(() => {
@@ -146,8 +140,9 @@ function CustomEditor({ file }) {
           { label: 'Contrast', icon: contrastIcon, value: contrast, setter: setContrast, min: 0, max: 200 },
           { label: 'Saturate', icon: saturateIcon, value: saturate, setter: setSaturate, min: 0, max: 200, className: 'saturate' },
           { label: 'Grayscale', icon: grayscaleIcon, value: grayscale, setter: setGrayscale, min: 0, max: 100 },
+          { label: 'Tint', icon: brightnessIcon, value: tint, setter: setTint, min: 0, max: 360 },
           { label: 'Rotate', icon: rotateIcon, value: rotate, setter: setRotate, min: 0, max: 360 },
-          { label: 'Zoom', icon: zoomIcon, value: zoom, setter: setZoom, min: 0.1, max: 10, step: 0.01 }
+          { label: 'Zoom', icon: zoomIcon, value: zoom, setter: setZoom, min: 0.1, max: 100, step: 0.01 }
         ].map((control, index) => (
           <div key={control.label} className="controls__property">
             <label className="controls__property__label">
@@ -199,6 +194,20 @@ function CustomEditor({ file }) {
             />
             Flip Vertical
           </label>
+        </div>
+      </div>
+      <div className="btns">
+        <div className="btns__container">
+          <button className="btns__container__download" onClick={convertAndDownloadImage}>
+            <img className="btns__container__download__img" src={convertIcon} alt="Save Icon" />
+            конвертировать в WebP и скачать
+          </button>
+        </div>
+        <div className="btns__container">
+          <button className="btns__container__download" onClick={downloadImage}>
+            <img className="btns__container__download__img" src={save} alt="Save Icon" />
+            скачать
+          </button>
         </div>
       </div>
     </div>

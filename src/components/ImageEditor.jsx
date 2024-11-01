@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import ReusableDragAndDrop from '../utils/DragNDrop';
+import { usePhotoEditor } from '../hooks/usePhotoEditor';
 import CustomEditor from '../utils/CustomEditor';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, A11y, Autoplay } from 'swiper/modules';
+import JSZip from 'jszip'; // Импортируем библиотеку JSZip
+import FileSaver from 'file-saver'; 
 
 import 'swiper/css';
 import 'swiper/css/navigation';

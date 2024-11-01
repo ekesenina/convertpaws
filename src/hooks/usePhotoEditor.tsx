@@ -409,6 +409,8 @@
 
 
 import { useState, useEffect, useRef, useCallback } from 'react';
+import JSZip from 'jszip'; // Импорт библиотеки jszip
+import FileSaver from 'file-saver'; // Импорт библиотеки file-saver
 
 /**
  * Parameters for the usePhotoEditor hook.
@@ -458,6 +460,7 @@ interface UsePhotoEditorParams {
    * Initial rotation angle in degrees (default: 0).
    */
   defaultRotate?: number;
+  defaultTint?: number;
 }
 
 /**
@@ -476,6 +479,7 @@ export const usePhotoEditor = ({
   defaultFlipVertical = false,
   defaultZoom = 1,
   defaultRotate = 0,
+  defaultTint = 0
 }: UsePhotoEditorParams) => {
 
   // Ref to the canvas element where the image will be drawn.
@@ -492,6 +496,7 @@ export const usePhotoEditor = ({
   const [contrast, setContrast] = useState(defaultContrast);
   const [saturate, setSaturate] = useState(defaultSaturate);
   const [grayscale, setGrayscale] = useState(defaultGrayscale);
+  const [tint, setTint] = useState(defaultTint);
   const [rotate, setRotate] = useState(defaultRotate);
   const [flipHorizontal, setFlipHorizontal] = useState(defaultFlipHorizontal);
   const [flipVertical, setFlipVertical] = useState(defaultFlipVertical);
@@ -522,7 +527,7 @@ export const usePhotoEditor = ({
   // Effect to apply transformations and filters whenever relevant state changes.
   useEffect(() => {
     applyFilter();
-  }, [file, imageSrc, rotate, flipHorizontal, flipVertical, zoom, brightness, contrast, saturate, grayscale, offsetX, offsetY]);
+  }, [file, imageSrc, rotate, flipHorizontal, flipVertical, zoom, brightness, contrast, saturate, grayscale, offsetX, offsetY, tint]);
 
   /**
    * Applies the selected filters and transformations to the image on the canvas.
@@ -622,6 +627,16 @@ export const usePhotoEditor = ({
     const canvas = canvasRef.current;
     if (canvas && file) {
       const link = document.createElement('a');
+      link.download = file.name;
+      link.href = canvas.toDataURL(file?.type);
+      link.click();
+    }
+  };
+
+  const convertAndDownloadImage = () => {
+    const canvas = canvasRef.current;
+    if (canvas && file) {
+      const link = document.createElement('a');
       const newName = file.name.split('.')[0]
       link.download = newName+".webp"
       link.href = canvas.toDataURL("image/webp", 0.9);
@@ -635,7 +650,13 @@ export const usePhotoEditor = ({
    * @returns {string} - A CSS filter string.
    */
   const getFilterString = (): string => {
-    return `brightness(${brightness}%) contrast(${contrast}%) grayscale(${grayscale}%) saturate(${saturate}%)`;
+    return `
+      brightness(${brightness}%) 
+      contrast(${contrast}%) 
+      grayscale(${grayscale}%) 
+      saturate(${saturate}%) 
+      hue-rotate(${tint}deg)
+    `;
   };
 
   /**
@@ -717,6 +738,7 @@ export const usePhotoEditor = ({
     setContrast(defaultContrast);
     setSaturate(defaultSaturate);
     setGrayscale(defaultGrayscale);
+    setTint(defaultTint);
     setRotate(defaultRotate);
     setFlipHorizontal(defaultFlipHorizontal);
     setFlipVertical(defaultFlipVertical);
@@ -745,6 +767,7 @@ export const usePhotoEditor = ({
     saturate,
     /** Current grayscale level. */
     grayscale,
+    tint,
     /** Current rotation angle in degrees. */
     rotate,
     /** Flag indicating if the image is flipped horizontally. */
@@ -769,6 +792,7 @@ export const usePhotoEditor = ({
     setSaturate,
     /** Function to set the grayscale level. */
     setGrayscale,
+    setTint,
     /** Function to set the rotation angle. */
     setRotate,
     /** Function to set the horizontal flip state. */
@@ -799,6 +823,7 @@ export const usePhotoEditor = ({
     handleWheel,
     /** Function to download the edited image. */
     downloadImage,
+    convertAndDownloadImage,
     /** Function to generate the edited image file. */
     generateEditedFile,
     /** Function to reset filters and styles to default. */
