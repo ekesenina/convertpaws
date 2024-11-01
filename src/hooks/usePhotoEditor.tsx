@@ -712,7 +712,7 @@ export const usePhotoEditor = ({
   /**
    * Resets the filters and styles to its original state with the default settings.
    */
-  const resetFilters = () => {
+  const resetFilters = (onResetComplete) => {
     setBrightness(defaultBrightness);
     setContrast(defaultContrast);
     setSaturate(defaultSaturate);
@@ -725,6 +725,9 @@ export const usePhotoEditor = ({
     setOffsetY(0);
     setPanStart(null);
     setIsDragging(false);
+  
+    // Вызываем коллбэк для обновления стилей инпутов
+    if (onResetComplete) onResetComplete();
   };
 
 

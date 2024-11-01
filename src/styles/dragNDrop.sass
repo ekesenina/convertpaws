@@ -1,0 +1,29 @@
+@use 'variables'
+
+.dnd
+    border: 2px dashed var(--text-color)
+    border-radius: 15px
+    text-align: center
+    position: relative
+    &__text, &__note
+        font-family: 'main'
+        color: var(--text-color)
+    &__text
+        font-size: 16px
+        font-weight: 500
+        display: flex
+        flex-direction: column
+        align-items: center
+        justify-content: center
+        padding: 15px 30px 50px 30px
+    &__note
+        position: absolute
+        bottom: 0px
+        font-size: 14px
+        font-weight: 400
+        margin: 15px 0
+        left: 50%
+        transform: translateX(-50%)
+    &__icon
+        width: 100px
+        margin-bottom: 20px

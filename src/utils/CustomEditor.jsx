@@ -74,6 +74,43 @@ function CustomEditor({ file }) {
     setIsFlipedVertical(!isFlipedVertical); // Переключаем состояние
   };
 
+  // const handleResetClick = () => {
+  //   resetFilters(() => {
+  //     setIsFlipedHorizontal(false);
+  //     setIsFlipedVertical(false);
+  //     // Обновляем стили инпутов после сброса
+  //     rangeRefs.current.forEach((rangeInput) => {
+  //       if (rangeInput) updateProgress(rangeInput);
+  //     });
+  //   });
+  // };
+  const handleResetClick = () => {
+    // Первый вызов resetFilters
+    resetFilters(() => {
+      setIsFlipedHorizontal(false);
+      setIsFlipedVertical(false);
+      // Обновляем стили инпутов после сброса
+      rangeRefs.current.forEach((rangeInput) => {
+        if (rangeInput) updateProgress(rangeInput);
+      });
+    });
+  
+    // Второй вызов resetFilters через небольшой интервал
+    setTimeout(() => {
+      resetFilters(() => {
+        setIsFlipedHorizontal(false);
+        setIsFlipedVertical(false);
+        rangeRefs.current.forEach((rangeInput) => {
+          if (rangeInput) updateProgress(rangeInput);
+        });
+      });
+    }, 1); // Тайм-аут в 1 мс для имитации двойного клика
+  };
+
+  const updateProgress = (rangeInput) => {
+    rangeInput.style.setProperty('--value', (rangeInput.value / rangeInput.max) * 100);
+  };
+
   return (
     <div className="file">
       {imageSrc && (
@@ -91,7 +128,7 @@ function CustomEditor({ file }) {
           />
           {/* <p className='fileName'>{file.name}</p> */}
           <div className="tools">
-            <button className="tools__resetButton" onClick={resetFilters} aria-label="Reset changes">
+            <button className="tools__resetButton" onClick={handleResetClick} aria-label="Reset changes">
               <img className="tools__resetButton__img" src={reset} alt="Reset Icon" />
             </button>
             <button className="tools__editButton" onClick={handleEditorClick} aria-label="Edit">
@@ -128,7 +165,7 @@ function CustomEditor({ file }) {
             />
           </div>
         ))}
-        <div className='controls__property'>
+        <div className='controls__property flip'>
            <label className='controls__property__label'>
              <input
               className='controls__property__input flipCheckbox'
@@ -146,7 +183,7 @@ function CustomEditor({ file }) {
           </label>
         </div>
 
-        <div className='controls__property'>
+        <div className='controls__property flip'>
           <label className='controls__property__label'>
             <input
               className='controls__property__input flipCheckbox'

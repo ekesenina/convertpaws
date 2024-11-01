@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+import upload from '../assets/icons/upload.svg'
+
 const ReusableDragAndDrop = ({ onFilesAdded }) => {
   const [files, setFiles] = useState([]);
 
@@ -20,10 +22,11 @@ const ReusableDragAndDrop = ({ onFilesAdded }) => {
 
   return (
     <div 
+      className="dnd"
       onDrop={handleDrop} 
       onDragOver={handleDragOver} 
-      style={{ border: "2px dashed #ccc", padding: "20px", borderRadius: "8px", textAlign: "center" }}
     >
+      {/* <img className="dnd__icon" src={upload} alt="Reset Icon" /> */}
       <input
         type="file"
         onChange={setFileData}
@@ -31,10 +34,11 @@ const ReusableDragAndDrop = ({ onFilesAdded }) => {
         style={{ display: "none" }}
         id="file-input"
       />
-      <label htmlFor="file-input" style={{ cursor: "pointer" }}>
+      <label htmlFor="file-input" style={{ cursor: "pointer" }} className="dnd__text">
+        <img className="dnd__icon" src={upload} alt="Reset Icon" />
         Перетащите файлы сюда или нажмите для выбора
       </label>
-      <p>Загружено: {files.length} файлов</p>
+      <p className="dnd__note">Загружено: {files.length} файлов</p>
       {/* {files.length > 0 && (
         <ul>
           {files.map((file, index) => (
