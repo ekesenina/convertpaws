@@ -120,7 +120,6 @@ function CustomEditor({ file }) {
             onTouchMove={handlePointerMove}
             onTouchEnd={handlePointerUp}
           />
-          {/* <p className='fileName'>{file.name}</p> */}
           <div className="tools">
             <button className="tools__resetButton" onClick={handleResetClick} aria-label="Reset changes">
               <img className="tools__resetButton__img" src={reset} alt="Reset Icon" />
@@ -200,13 +199,13 @@ function CustomEditor({ file }) {
         <div className="btns__container">
           <button className="btns__container__download" onClick={convertAndDownloadImage}>
             <img className="btns__container__download__img" src={convertIcon} alt="Save Icon" />
-            конвертировать в WebP и скачать
+            Конвертировать в WebP и скачать
           </button>
         </div>
         <div className="btns__container">
           <button className="btns__container__download" onClick={downloadImage}>
             <img className="btns__container__download__img" src={save} alt="Save Icon" />
-            скачать
+            Скачать
           </button>
         </div>
       </div>
