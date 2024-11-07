@@ -128,9 +128,9 @@ function CustomEditor({ file }) {
             <button className="tools__editButton" onClick={handleEditorClick} aria-label="Edit">
               <img className="tools__editButton__img" src={edit} alt="Edit Icon" />
             </button>
-            <button className="tools__saveButton" onClick={downloadImage}>
+            {/* <button className="tools__saveButton" onClick={downloadImage}>
               <img className="tools__saveButton__img" src={save} alt="Save Icon" />
-            </button>
+            </button> */}
           </div>
         </div>
       )}
