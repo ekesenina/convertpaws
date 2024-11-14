@@ -408,9 +408,7 @@
 
 
 
-import { useState, useEffect, useRef, useCallback } from 'react';
-import JSZip from 'jszip'; // Импорт библиотеки jszip
-import FileSaver from 'file-saver'; // Импорт библиотеки file-saver
+import { useState, useEffect, useRef } from 'react';
 
 /**
  * Parameters for the usePhotoEditor hook.
