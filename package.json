@@ -12,7 +12,7 @@
     "predeploy": "vite build",
     "deploy": "gh-pages -d dist",
     "start": "npm run build && npm run dev -- --host",
-    "prod": "npm run build && npm run preview"
+    "prod": "npm run build && npm run preview -- --host"
   },
   "dependencies": {
     "react": "^18.3.1",
